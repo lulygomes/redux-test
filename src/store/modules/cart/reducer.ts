@@ -1,26 +1,42 @@
 import { Reducer } from "redux";
+// immer é um lib que facilita a adição de dados ao estado.
+import produce from "immer";
 import { ICartState } from "./types";
 
 const INITIAL_STATE: ICartState = {
-  items: []
+  items: [],
 };
 
 const cart: Reducer<ICartState> = (state = INITIAL_STATE, action) => {
-  switch(action.type) {
-    case 'ADD_PRODUCT_TO_CART': {
-      const { product } = action.type;
+  return produce(state, (draft) => {
+    switch (action.type) {
+      case "ADD_PRODUCT_TO_CART": {
+        const { product } = action.payload;
 
-      state.items.push({
-        product,
-        quantity: 1
-      });
+        draft.items.push({
+          product,
+          quantity: 1,
+        });
 
-      return state
+        break;
+
+        // Exemplo sem immer
+        // return {
+        //   ...state,
+        //   items: [
+        //     ...state.items,
+        //     {
+        //       product,
+        //       quantity: 1,
+        //     }
+        //   ]
+        // };
+      }
+      default: {
+        return draft;
+      }
     }
-    default: {
-      return state
-    }
-  }
+  });
 };
 
 export default cart;
