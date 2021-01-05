@@ -8,8 +8,6 @@ interface CatalogItemProps {
   product: IProduct;
 }
 
-
-
 const CatalogItem: React.FC<CatalogItemProps> = ({ product }) => {
   const dispach = useDispatch();
 
