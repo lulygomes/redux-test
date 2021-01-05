@@ -20,9 +20,6 @@ function* checkProductStock({payload}: CheckProductStockRequest) {
 
   const availableStockResponse: AxiosResponse<IStockResponse> = yield call(api.get, `stock/${product.id}`)
 
-  console.log('response',availableStockResponse.data.quantity)
-  console.log('current',currentQuantity)
-
   if (availableStockResponse.data.quantity > currentQuantity) {
     yield put(addProductToCartSuccess(product))
   } else {
